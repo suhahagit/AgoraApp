@@ -1,16 +1,16 @@
 import React from 'react'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 
-const Item = observer((props) => {
+const Item = (props) => {
 
   const item = props.item
 
-  const buyItem = () => { props.store.buyItem(item.name) }
+  const buyItem = () => { props.Inventory.buyItem(item.name) }
 
   const changePrice = (name) => {
     let newPrice = prompt("enter new price")
     if (newPrice != null) {
-      props.store.changePrice(name, newPrice)
+      props.Inventory.changePrice(name, newPrice)
     }
   }
 
@@ -20,6 +20,6 @@ const Item = observer((props) => {
       <button onClick={buyItem}>Buy</button>
     </div>
   )
-})
+}
 
-export default Item
+export default inject("Inventory")(observer(Item))

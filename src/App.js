@@ -4,7 +4,7 @@ import Market from './components/Market';
 function App(props) {
   return (
     <div className="App">
-      <Market store = {props.store}/>
+      <Market/>
     </div>
   );
 }

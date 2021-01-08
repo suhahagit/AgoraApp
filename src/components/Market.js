@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Item from './Item'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 
 class Market extends Component {
     constructor() {
@@ -17,7 +17,7 @@ class Market extends Component {
     addItem = (e) => {
         if (e.key === 'Enter') {
             if (this.state.newItem !== '') {
-                this.props.store.addItem(this.state.newItem)
+                this.props.Inventory.addItem(this.state.newItem)
                 this.setState({ newItem: '' })
             }
         }
@@ -27,11 +27,12 @@ class Market extends Component {
         return (
             <div>
                 <input onChange={this.handleInput} value={this.state.newItem} onKeyDown={this.addItem} placeholder='add item'/>
-                {this.props.store.items.map((i, k) => <Item item={i} key={k} store={this.props.store} />)}
+                {this.props.Inventory.items.map((i, k) => <Item item={i} key={k} />)}
                 <h5>(click on items to set price)</h5>
+                <div>num of items in store: {this.props.Inventory.numItems}</div>
             </div>
         )
     }
 }
 
-export default observer(Market)
+export default inject("Inventory")(observer(Market))
